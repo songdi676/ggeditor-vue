@@ -24,6 +24,7 @@ import {
 import behaviorManager from "@/common/behaviorManager";
 import Graph from "@/components/Graph/index.vue";
 
+
 import "./behavior";
 interface FlowProps extends Partial<GraphReactEventProps> {
   style?: object;
@@ -137,7 +138,8 @@ export default class Flow extends Vue {
       },
       ...graphConfig
     });
-    this.$store.commit("setgraph", this.graph);
+    global.graph=this.graph
+    //this.$store.commit("setgraph", this.graph);
     return this.graph;
   }
 }
