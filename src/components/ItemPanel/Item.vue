@@ -1,16 +1,16 @@
 <template>
-  <div @mousedown="handleMouseDown">
+  <div class="item" @mousedown="handleMouseDown">
     <slot></slot>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
-import pick from "lodash/pick";
+// import pick from "lodash/pick";
 import global from "@/common/global";
 import { ItemType, GraphMode } from "@/common/constants";
 import { NodeModel } from "@/common/interfaces";
-import { EditorContextProps } from "@/components/EditorContext";
+// import { EditorContextProps } from "@/components/EditorContext";
 
 @Component
 export default class Item extends Vue {
