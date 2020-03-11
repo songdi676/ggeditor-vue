@@ -8,6 +8,9 @@ class Global {
   /** 埋点开关 */
   trackable = true;
 
+    /** 实例 */
+  graph: G6.Graph | null = null;
+
   /** 剪贴板 */
   clipboard: {
     point: {

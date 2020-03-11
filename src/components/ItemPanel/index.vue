@@ -21,6 +21,7 @@ export default class ItemPanel extends Vue {
 
   mounted() {
     this.$nextTick(function() {
+      this.graph=global.graph
       document.addEventListener("mouseup", this.handleMouseUp, false);
     });
   }

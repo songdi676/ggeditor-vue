@@ -12,6 +12,7 @@
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import { EditorEvent, EditorCommandIcon } from "@/common/constants";
 import { GraphStateEvent } from "@/common/interfaces";
+import global from "@/common/global";
 import commandManager from "@/common/commandManager";
 import { EditorContextProps } from "@/components/EditorContext";
 
@@ -40,6 +41,15 @@ export default class Command extends Vue {
     this.disabled = !commandManager.canExecute(graph, this.$props.name);
     graph.on(EditorEvent.onGraphStateChange, () => {
       this.disabled = !commandManager.canExecute(graph, this.$props.name);
+    });
+  }
+    mounted() {
+    this.$nextTick(function() {
+      const graph=global.graph;
+       this.disabled = !commandManager.canExecute(graph, this.$props.name);
+    graph.on(EditorEvent.onGraphStateChange, () => {
+      this.disabled = !commandManager.canExecute(graph, this.$props.name);
+    });
     });
   }
 

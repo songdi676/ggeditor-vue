@@ -21,7 +21,11 @@ export default class Item extends Vue {
   graphChange(to: any, from: any) {
     this.graph = this.$store.state.graph;
   }
-
+  mounted() {
+    this.$nextTick(function() {
+      this.graph=global.graph
+    });
+  }
   handleMouseDown() {
     const that = this;
     const graph = that.graph;
