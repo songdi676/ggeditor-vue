@@ -87,29 +87,29 @@ export enum EditorCommand {
 
 export enum EditorCommandIcon {
   /** 撤销 */
-  undo = "el-icon-back",
+  undo = "reply",
   /** 重做 */
-  redo = "el-icon-right",
+  redo = "share",
   /** 添加 */
-  add = "el-icon-plus",
+  add = "files-o",
   /** 更新 */
-  update = "el-icon-refresh",
+  update = "coffee",
   /** 删除 */
-  remove = "el-icon-delete",
+  remove = "trash",
   /** 复制 */
-  copy = "el-icon-document-copy",
+  copy = "copy",
   /** 粘贴 */
-  paste = "el-icon-document-add",
+  paste = "paste",
   /** 粘贴到这里 */
-  pasteHere = "el-icon-document-add",
+  pasteHere = "coffee",
   /** 放大 */
-  zoomIn = "el-icon-zoom-in",
+  zoomIn = "search-minus",
   /** 缩小 */
-  zoomOut = "el-icon-zoom-out",
+  zoomOut = "search-plus",
   /** 插入主题 */
-  topic = "el-icon-circle-plus",
+  topic = "coffee",
   /** 插入子主题 */
-  subtopic = "el-icon-circle-plus",
+  subtopic = "coffee",
   /** 收起 */
   fold = "el-icon-s-fold",
   /** 展开 */

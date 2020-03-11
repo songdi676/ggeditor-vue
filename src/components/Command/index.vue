@@ -5,7 +5,12 @@
     :disabled="disabled"
     @click="handleClick"
     :icon="getEditorCommandIcon(name)"
-    >{{ name }}</li>
+  >
+    <i class="active">
+      <font-awesome-icon :icon="['fas', getEditorCommandIcon(name)]" />
+    </i>
+    <!-- {{ name }} -->
+  </li>
 </template>
 
 <script lang="ts">
@@ -60,5 +65,22 @@ export default class Command extends Vue {
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
+}
+.toolbar ul li i {
+    display: inline-block;
+    width: 27px;
+    height: 27px;
+    margin: 0 6px;
+    padding-top: 10px;
+    text-align: center;
+    border: 1px solid #fff;
+    cursor: pointer;
+}
+.toolbar .command i:hover {
+    border: 1px solid #e6e9ed;
+}
+.toolbar .command-disabled i {
+    color: rgba(0,0,0,0.25);
+    cursor: auto;
 }
 </style>

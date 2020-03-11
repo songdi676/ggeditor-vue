@@ -1,7 +1,7 @@
 <template>
   <div class="editor">
-    <el-row class="toolBarPanel">
-      <el-col :span="24">
+    <div class="toolBarPanel g-row">
+      <div class="g-col-24">
         <div class="toolbar">
           <ul v-for="buttonGroup in FLOW_COMMAND_LIST" :key="buttonGroup.index">
             <Command
@@ -12,10 +12,10 @@
             ></Command>
           </ul>
         </div>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="2">
+      </div>
+    </div>
+    <div class="mainPanel g-row">
+      <div class="g-col-3 sideBar">
         <div>
           <ItemPanel>
             <Item
@@ -91,11 +91,11 @@
             </Item>
           </ItemPanel>
         </div>
-      </el-col>
-      <el-col :span="22" class="canvasPanel">
+      </div>
+      <div class="g-col-21 canvasPanel">
         <Flow :flowProps="flowProps" :setGraph="setGraph" />
-      </el-col>
-    </el-row>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -287,28 +287,147 @@ export default class Editor extends Vue {
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.mainPanel {
+  flex: 1;
+  display: flex;
+}
+.sideBar {
+  background-color: #f6f6f6;
+  border-right: 1px solid #e6e9ed;
+  display: flex;
+  justify-content: center;
 }
 .toolBarPanel {
-  text-align: left;
-  margin-bottom: 10px;
-  background: #3a93ef;
+  border: 1px solid #e6e9ed;
+  padding: 8px;
 }
 .itemOutSide {
+  height: 100%;
   margin-right: 10px;
-  border: 1px solid #e5e5e5;
 }
 .item {
-  min-height: 120px;
+  min-height: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid #e5e5e5;
-  padding: 5px 0;
+  padding: 15px 0;
 }
 .item:last-child {
   border-bottom: none;
 }
-.canvasPanel{
+.toolbar ul {
+  overflow: auto;
+  vertical-align: middle;
+  float: left;
+}
+.toolbar ul li {
+  float: left;
+  padding: 0 8px;
+  list-style: none;
+}
+.canvasPanel {
+  flex: 1;
   border-right: 1px solid #ededed;
+}
+.canvasPanel > div {
+  display: flex;
+  width: 85.5%;
+}
+.canvasPanel > div > div > div {
+  width: 12.5%;
+}
+/* 布局 */
+.g-row {
+  position: relative;
+  box-sizing: border-box;
+}
+
+[class*="g-col-"] {
+  float: left;
+  box-sizing: border-box;
+}
+.g-row:after {
+  clear: both;
+}
+.g-row:after,
+.g-row:before {
+  display: table;
+  content: "";
+}
+.g-col-1 {
+  width: 4.16667%;
+}
+.g-col-2 {
+  width: 8.333333%;
+}
+.g-col-3 {
+  width: 12.5%;
+}
+.g-col-4 {
+  width: 16.66667%;
+}
+.g-col-5 {
+  width: 20.83333%;
+}
+.g-col-6 {
+  width: 25%;
+}
+.g-col-7 {
+  width: 29.16667%;
+}
+.g-col-8 {
+  width: 33.33333%;
+}
+.g-col-9 {
+  width: 37.5%;
+}
+.g-col-10 {
+  width: 41.66667%;
+}
+.g-col-11 {
+  width: 45.83333%;
+}
+.g-col-12 {
+  width: 50%;
+}
+.g-col-13 {
+  width: 54.16667%;
+}
+.g-col-14 {
+  width: 58.33333%;
+}
+.g-col-15 {
+  width: 62.5%;
+}
+.g-col-16 {
+  width: 66.66667%;
+}
+.g-col-17 {
+  width: 70.83333%;
+}
+.g-col-18 {
+  width: 75%;
+}
+.g-col-19 {
+  width: 79.16667%;
+}
+.g-col-20 {
+  width: 83.33333%;
+}
+.g-col-21 {
+  width: 87.5%;
+}
+.g-col-23 {
+  width: 95.83333%;
+}
+.g-col-22 {
+  width: 91.66667%;
+}
+.g-col-24 {
+  width: 100%;
 }
 </style>
