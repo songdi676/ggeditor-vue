@@ -1,12 +1,11 @@
 <template>
-  <el-button
+  <li
     :class="disabled ? 'command-disabled' : 'command'"
     type="primary"
     :disabled="disabled"
     @click="handleClick"
     :icon="getEditorCommandIcon(name)"
-    >{{ name }}</el-button
-  >
+    >{{ name }}</li>
 </template>
 
 <script lang="ts">

@@ -3,14 +3,14 @@
     <el-row class="toolBarPanel">
       <el-col :span="24">
         <div class="toolbar">
-          <el-button-group v-for="buttonGroup in FLOW_COMMAND_LIST" :key="buttonGroup.index">
+          <ul v-for="buttonGroup in FLOW_COMMAND_LIST" :key="buttonGroup.index">
             <Command
               v-for="button in buttonGroup"
               :key="button.index"
               :name="button"
               :executeCommand="executeCommand"
             ></Command>
-          </el-button-group>
+          </ul>
         </div>
       </el-col>
     </el-row>
