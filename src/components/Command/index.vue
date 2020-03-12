@@ -94,4 +94,5 @@ export default class Command extends Vue {
     color: rgba(0,0,0,0.25);
     cursor: auto;
 }
+
 </style>

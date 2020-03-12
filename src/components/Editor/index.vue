@@ -294,12 +294,15 @@ export default class Editor extends Vue {
 .mainPanel {
   flex: 1;
   display: flex;
+  height: 100%;
+  overflow: hidden;
 }
 .sideBar {
   background-color: #f6f6f6;
   border-right: 1px solid #e6e9ed;
   display: flex;
   justify-content: center;
+  height: 100%;
 }
 .toolBarPanel {
   border: 1px solid #e6e9ed;
@@ -332,15 +335,18 @@ export default class Editor extends Vue {
 .canvasPanel {
   flex: 1;
   border-right: 1px solid #ededed;
+  height: 100%;
 }
 /* .canvasPanel > div {
   display: flex;
   width: 85.5%;
 }*/
-.canvasPanel > div > div > div {
-  display: flex;
-  flex-direction: row-reverse;
-} 
+.canvasPanel> div .g6-minimap {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
 /* 布局 */
 .g-row {
   position: relative;
