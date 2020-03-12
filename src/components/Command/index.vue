@@ -85,6 +85,7 @@ export default class Command extends Vue {
     text-align: center;
     border: 1px solid #fff;
     cursor: pointer;
+    color: #6e6e6e;
 }
 .toolbar .command i:hover {
     border: 1px solid #e6e9ed;

@@ -103,9 +103,9 @@ export enum EditorCommandIcon {
   /** 粘贴到这里 */
   pasteHere = "coffee",
   /** 放大 */
-  zoomIn = "search-minus",
+  zoomIn = "search-plus",
   /** 缩小 */
-  zoomOut = "search-plus",
+  zoomOut = "search-minus",
   /** 插入主题 */
   topic = "coffee",
   /** 插入子主题 */

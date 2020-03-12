@@ -333,13 +333,14 @@ export default class Editor extends Vue {
   flex: 1;
   border-right: 1px solid #ededed;
 }
-.canvasPanel > div {
+/* .canvasPanel > div {
   display: flex;
   width: 85.5%;
-}
+}*/
 .canvasPanel > div > div > div {
-  width: 12.5%;
-}
+  display: flex;
+  flex-direction: row-reverse;
+} 
 /* 布局 */
 .g-row {
   position: relative;
