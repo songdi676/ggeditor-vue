@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Editor />
+    <Editor @node:click="nodeClick" @afteradditem="afteradditem"  @beforeremoveitem="beforeremoveitem"/>
   </div>
 </template>
 
@@ -10,6 +10,17 @@ export default {
   name: 'app',
   components: {
     Editor
+  },
+  methods: {
+    nodeClick: function (item) {
+      alert('click'+ JSON.stringify(item._cfg.model) )      
+    },
+    afteradditem: function (item) {
+      alert('afteradditem'+  JSON.stringify(item._cfg.model) )      
+    },
+    beforeremoveitem: function (item) {
+      alert('beforeremoveitem'+JSON.stringify(item._cfg.model) )      
+    }
   }
 }
 </script>

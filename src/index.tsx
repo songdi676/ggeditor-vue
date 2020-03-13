@@ -3,7 +3,7 @@ import G6 from '@antv/g6';
 import '@/shape';
 
 import * as Util from '@/utils';
-
+import "@/assets/icons/iconfont.css";
 import Editor from '@/components/Editor/index.vue';
 import Flow from '@/components/Flow/index.vue';
 //import Mind from '@/components/Mind';

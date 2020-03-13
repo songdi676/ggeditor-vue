@@ -111,11 +111,12 @@ import {
 } from "@/common/constants";
 import { CommandEvent } from "@/common/interfaces";
 import commandManager from "@/common/commandManager";
-import { EditorCommand } from "@/common/constants";
+import { EditorCommand,GraphNodeEvent,GraphCustomEvent } from "@/common/constants";
 import Flow from "@/components/Flow/index.vue";
 import Command from "@/components/Command/index.vue";
 import ItemPanel from "@/components/ItemPanel/index.vue";
 import Item from "@/components/ItemPanel/Item.vue";
+import { GraphStateEvent } from '@/common/interfaces';
 import {
   EditorContextProps,
   EditorPrivateContextProps
@@ -142,15 +143,33 @@ export default class Editor extends Vue {
       nodes: [
         {
           id: "0",
-          label: "Node",
+          label: "脚本数量：",
           x: 55,
-          y: 55
+          y: 55,
+          shape: 'bizFlowNode',
+          data:[
+            {
+              name:"执行sql"
+            },
+            {
+              name:"数据初始化"
+            }
+          ]
         },
         {
           id: "1",
-          label: "Node",
+          label: "应用数量：",
           x: 55,
-          y: 255
+          y: 255,
+          shape: 'bizFlowNode',
+          data:[
+            {
+              name:"启动：app"
+            },
+            {
+              name:"停止app"
+            }
+          ]
         }
       ],
       edges: [
@@ -213,6 +232,21 @@ export default class Editor extends Vue {
     const props = this.$props.editorProps;
     graph.on<CommandEvent>(EditorEvent.onBeforeExecuteCommand, () => {});
     graph.on<CommandEvent>(EditorEvent.onAfterExecuteCommand, () => {});
+    graph.on(GraphNodeEvent.onNodeClick, ({ item }) => {
+       this.$emit(GraphNodeEvent.onNodeClick, item);
+    });
+    graph.on(GraphCustomEvent.onBeforeAddItem, ({ item }) => {
+       this.$emit(GraphCustomEvent.onBeforeAddItem, item);
+    });
+    graph.on(GraphCustomEvent.onAfterAddItem, ({ item }) => {
+       this.$emit(GraphCustomEvent.onAfterAddItem, item);
+    });
+    graph.on(GraphCustomEvent.onAfterRemoveItem, ({ item }) => {
+       this.$emit(GraphCustomEvent.onAfterRemoveItem, item);
+    });
+    graph.on(GraphCustomEvent.onBeforeRemoveItem, ({ item }) => {
+       this.$emit(GraphCustomEvent.onBeforeRemoveItem, item);
+    })
   }
 
   bindShortcut(graph: G6.Graph) {
@@ -260,7 +294,9 @@ export default class Editor extends Vue {
       });
     });
   }
-
+  getGraph(){
+    return this.graph;
+  }
   setGraph(graph: G6.Graph) {
     this.graph = graph;
     this.bindEvent(graph);

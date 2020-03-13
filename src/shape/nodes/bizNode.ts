@@ -143,7 +143,6 @@ const bizNode: CustomNode = {
     if (this.beforeSetState) {
       this.beforeSetState(name, value, item);
     }
-
     const group = item.getContainer();
     const model = item.getModel();
     const states = item.getStates() as ItemState[];

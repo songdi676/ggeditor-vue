@@ -1,6 +1,6 @@
 import cloneDeep from "lodash/cloneDeep";
 import { getGraphState } from "@/utils";
-import { EditorEvent } from "@/common/constants";
+import { EditorEvent,EditorCommand } from "@/common/constants";
 import { Command } from "@/common/interfaces";
 
 class CommandManager {
@@ -66,6 +66,7 @@ class CommandManager {
       params: command.params
     });
 
+    
     if (command.canUndo(graph)) {
       const { commandQueue, commandIndex } = this;
 

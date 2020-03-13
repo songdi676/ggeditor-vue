@@ -67,6 +67,7 @@ const clickItemBehavior: ClickItemBehavior &
     graph.emit(EditorEvent.onGraphStateChange, {
       graphState: getGraphState(graph)
     });
+    
   },
 
   handleCanvasClick() {

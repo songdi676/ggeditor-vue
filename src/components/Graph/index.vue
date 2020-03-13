@@ -69,6 +69,8 @@ export default class Graph extends Vue {
       ...GraphCustomEvent
     };
 
+ 
+
     (Object.keys(events) as GraphReactEvent[]).forEach(event => {
       if (typeof props[event] === "function") {
         graph.on(events[event], props[event]);

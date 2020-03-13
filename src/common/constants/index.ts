@@ -51,7 +51,9 @@ export enum EditorEvent {
   /** 改变画面状态触发 */
   onGraphStateChange = "onGraphStateChange",
   /** 改变标签状态触发 */
-  onLabelStateChange = "onLabelStateChange"
+  onLabelStateChange = "onLabelStateChange",
+  /** 点击事件触发 */
+  onItemClick = "onItemClick"
 }
 
 export enum EditorCommand {

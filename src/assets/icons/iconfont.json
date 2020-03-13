@@ -1,0 +1,16 @@
+{
+  "id": "1686992",
+  "name": "paas",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "10502043",
+      "name": "删除",
+      "font_class": "ziyuan",
+      "unicode": "e6a5",
+      "unicode_decimal": 59045
+    }
+  ]
+}
