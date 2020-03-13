@@ -342,7 +342,7 @@ export default class Editor extends Vue {
 }
 .toolBarPanel {
   border: 1px solid #e6e9ed;
-  padding: 8px;
+  padding: 2px;
 }
 .itemOutSide {
   height: 100%;
