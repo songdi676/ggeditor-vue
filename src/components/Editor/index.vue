@@ -18,6 +18,7 @@
       <div class="g-col-3 sideBar">
         <div>
           <ItemPanel>
+            <slot name="item"></slot>
             <Item
               :model="{
               shape: 'circle',
@@ -109,7 +110,8 @@ import {
   EditorEvent,
   GraphCommonEvent
 } from "@/common/constants";
-import { CommandEvent } from "@/common/interfaces";
+import { CommandEvent ,FlowData,
+  MindData,} from "@/common/interfaces";
 import commandManager from "@/common/commandManager";
 import { EditorCommand,GraphNodeEvent,GraphCustomEvent } from "@/common/constants";
 import Flow from "@/components/Flow/index.vue";
@@ -137,55 +139,22 @@ interface EditorProps {
 })
 export default class Editor extends Vue {
   @Prop() private editorProps!: EditorProps;
+  @Prop() private data: FlowData | MindData;;
   graph: G6.Graph | null = null;
   flowProps = {
-    data: {
-      nodes: [
-        {
-          id: "0",
-          label: "脚本数量：",
-          x: 55,
-          y: 55,
-          shape: 'bizFlowNode',
-          data:[
-            {
-              name:"执行sql"
-            },
-            {
-              name:"数据初始化"
-            }
-          ]
-        },
-        {
-          id: "1",
-          label: "应用数量：",
-          x: 55,
-          y: 255,
-          shape: 'bizFlowNode',
-          data:[
-            {
-              name:"启动：app"
-            },
-            {
-              name:"停止app"
-            }
-          ]
-        }
-      ],
-      edges: [
-        {
-          label: "Label",
-          source: "0",
-          target: "1"
-        }
-      ]
-    }
+    data: {}
   };
   FLOW_COMMAND_LIST = [
     [EditorCommand.Undo, EditorCommand.Redo],
     [EditorCommand.Copy, EditorCommand.Paste, EditorCommand.Remove],
     [EditorCommand.ZoomIn, EditorCommand.ZoomOut]
   ];
+
+   created() {
+    this.flowProps = {
+    data: this.$props.data
+  };
+  }
 
   static setTrackable(trackable: boolean) {
     global.trackable = trackable;
@@ -246,7 +215,7 @@ export default class Editor extends Vue {
     });
     graph.on(GraphCustomEvent.onBeforeRemoveItem, ({ item }) => {
        this.$emit(GraphCustomEvent.onBeforeRemoveItem, item);
-    })
+    });
   }
 
   bindShortcut(graph: G6.Graph) {

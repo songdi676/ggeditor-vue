@@ -1,15 +1,78 @@
 <template>
   <div id="app">
-    <Editor @node:click="nodeClick" @afteradditem="afteradditem"  @beforeremoveitem="beforeremoveitem"/>
+    <Editor :data="flowData" @node:click="nodeClick" @afteradditem="afteradditem"  @beforeremoveitem="beforeremoveitem">
+      <template v-slot:item>
+        <Item
+              :model="{
+              shape: 'circle',
+              size: 100,
+              label: 'circle',
+            }"
+            >
+              <img
+                src="https://gw.alicdn.com/tfs/TB1IRuSnRr0gK0jSZFnXXbRRXXa-110-112.png"
+                width="55"
+                height="56"
+                :draggable="false"
+              />
+            </Item>
+      </template>
+    </Editor>
   </div>
 </template>
 
 <script>
 import Editor from "@/components/Editor/index.vue";
+import Item from "@/components/ItemPanel/Item.vue";
 export default {
   name: 'app',
   components: {
-    Editor
+    Editor,Item
+  },
+  data(){
+    return   {
+    flowData: {
+      nodes: [
+        {
+          id: "0",
+          label: "脚本数量：",
+          x: 55,
+          y: 55,
+          shape: 'bizFlowNode',
+          data:[
+            {
+              name:"执行sql"
+            },
+            {
+              name:"数据初始化"
+            }
+          ]
+        },
+        {
+          id: "1",
+          label: "应用数量：",
+          x: 55,
+          y: 255,
+          shape: 'bizFlowNode',
+          data:[
+            {
+              name:"启动：app"
+            },
+            {
+              name:"停止app"
+            }
+          ]
+        }
+      ],
+      edges: [
+        {
+          label: "Label",
+          source: "0",
+          target: "1"
+        }
+      ]
+    }
+  }
   },
   methods: {
     nodeClick: function (item) {
