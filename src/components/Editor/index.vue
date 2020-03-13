@@ -18,7 +18,7 @@
       <div class="g-col-3 sideBar">
         <div>
           <ItemPanel>
-            <slot name="item"></slot>            
+            <slot name="item"></slot>
           </ItemPanel>
         </div>
       </div>
@@ -39,15 +39,18 @@ import {
   EditorEvent,
   GraphCommonEvent
 } from "@/common/constants";
-import { CommandEvent ,FlowData,
-  MindData,} from "@/common/interfaces";
+import { CommandEvent, FlowData, MindData } from "@/common/interfaces";
 import commandManager from "@/common/commandManager";
-import { EditorCommand,GraphNodeEvent,GraphCustomEvent } from "@/common/constants";
+import {
+  EditorCommand,
+  GraphNodeEvent,
+  GraphCustomEvent
+} from "@/common/constants";
 import Flow from "@/components/Flow/index.vue";
 import Command from "@/components/Command/index.vue";
 import ItemPanel from "@/components/ItemPanel/index.vue";
 import Item from "@/components/ItemPanel/Item.vue";
-import { GraphStateEvent } from '@/common/interfaces';
+import { GraphStateEvent } from "@/common/interfaces";
 import {
   EditorContextProps,
   EditorPrivateContextProps
@@ -68,7 +71,7 @@ interface EditorProps {
 })
 export default class Editor extends Vue {
   @Prop() private editorProps!: EditorProps;
-  @Prop() private data: FlowData | MindData;;
+  @Prop() private data: FlowData | MindData;
   graph: G6.Graph | null = null;
   flowProps = {
     data: {}
@@ -79,10 +82,10 @@ export default class Editor extends Vue {
     [EditorCommand.ZoomIn, EditorCommand.ZoomOut]
   ];
 
-   created() {
+  created() {
     this.flowProps = {
-    data: this.$props.data
-  };
+      data: this.$props.data
+    };
   }
 
   static setTrackable(trackable: boolean) {
@@ -131,19 +134,19 @@ export default class Editor extends Vue {
     graph.on<CommandEvent>(EditorEvent.onBeforeExecuteCommand, () => {});
     graph.on<CommandEvent>(EditorEvent.onAfterExecuteCommand, () => {});
     graph.on(GraphNodeEvent.onNodeClick, ({ item }) => {
-       this.$emit(GraphNodeEvent.onNodeClick, item);
+      this.$emit(GraphNodeEvent.onNodeClick, item);
     });
     graph.on(GraphCustomEvent.onBeforeAddItem, ({ item }) => {
-       this.$emit(GraphCustomEvent.onBeforeAddItem, item);
+      this.$emit(GraphCustomEvent.onBeforeAddItem, item);
     });
     graph.on(GraphCustomEvent.onAfterAddItem, ({ item }) => {
-       this.$emit(GraphCustomEvent.onAfterAddItem, item);
+      this.$emit(GraphCustomEvent.onAfterAddItem, item);
     });
     graph.on(GraphCustomEvent.onAfterRemoveItem, ({ item }) => {
-       this.$emit(GraphCustomEvent.onAfterRemoveItem, item);
+      this.$emit(GraphCustomEvent.onAfterRemoveItem, item);
     });
     graph.on(GraphCustomEvent.onBeforeRemoveItem, ({ item }) => {
-       this.$emit(GraphCustomEvent.onBeforeRemoveItem, item);
+      this.$emit(GraphCustomEvent.onBeforeRemoveItem, item);
     });
   }
 
@@ -192,7 +195,7 @@ export default class Editor extends Vue {
       });
     });
   }
-  getGraph(){
+  getGraph() {
     return this.graph;
   }
   setGraph(graph: G6.Graph) {
@@ -236,7 +239,6 @@ export default class Editor extends Vue {
   border-right: 1px solid #e6e9ed;
   display: flex;
   justify-content: center;
-  height: 100%;
 }
 .toolBarPanel {
   border: 1px solid #e6e9ed;
@@ -245,6 +247,9 @@ export default class Editor extends Vue {
 .itemOutSide {
   height: 100%;
   margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .item {
   min-height: 70px;
@@ -275,7 +280,7 @@ export default class Editor extends Vue {
   display: flex;
   width: 85.5%;
 }*/
-.canvasPanel> div .g6-minimap {
+.canvasPanel > div .g6-minimap {
   position: absolute;
   top: 0;
   right: 0;
