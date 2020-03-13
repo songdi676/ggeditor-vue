@@ -117,7 +117,36 @@ export enum EditorCommandIcon {
   /** 展开 */
   unfold = "el-icon-s-unfold"
 }
-
+export enum EditorCommandName {
+  /** 撤销 */
+  undo = "撤销",
+  /** 重做 */
+  redo = "恢复",
+  /** 添加 */
+  add = "添加",
+  /** 更新 */
+  update = "更新",
+  /** 删除 */
+  remove = "删除",
+  /** 复制 */
+  copy = "复制",
+  /** 粘贴 */
+  paste = "粘贴",
+  /** 粘贴到这里 */
+  pasteHere = "粘贴到这里",
+  /** 放大 */
+  zoomIn = "放大",
+  /** 缩小 */
+  zoomOut = "缩小",
+  /** 插入主题 */
+  topic = "插入主题",
+  /** 插入子主题 */
+  subtopic = "插入子主题",
+  /** 收起 */
+  fold = "收起",
+  /** 展开 */
+  unfold = "收起"
+}
 export enum GraphCommonEvent {
   /** 单击鼠标左键或者按下回车键时触发 */
   onClick = "click",

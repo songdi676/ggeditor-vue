@@ -18,78 +18,7 @@
       <div class="g-col-3 sideBar">
         <div>
           <ItemPanel>
-            <slot name="item"></slot>
-            <Item
-              :model="{
-              shape: 'circle',
-              size: 100,
-              label: 'circle',
-            }"
-            >
-              <img
-                src="https://gw.alicdn.com/tfs/TB1IRuSnRr0gK0jSZFnXXbRRXXa-110-112.png"
-                width="55"
-                height="56"
-                :draggable="false"
-              />
-            </Item>
-            <Item
-              :model="{
-              shape: 'rect',
-              size: [100, 50],
-              label: 'rect',
-            }"
-            >
-              <img
-                src="https://gw.alicdn.com/tfs/TB1reKOnUT1gK0jSZFrXXcNCXXa-178-76.png"
-                width="89"
-                height="38"
-                :draggable="false"
-              />
-            </Item>
-            <Item
-              :model="{
-              shape: 'ellipse',
-              size: [100, 50],
-              label: 'ellipse',
-            }"
-            >
-              <img
-                src="https://gw.alicdn.com/tfs/TB1AvmVnUH1gK0jSZSyXXXtlpXa-216-126.png"
-                width="108"
-                height="63"
-                :draggable="false"
-              />
-            </Item>
-            <Item
-              :model="{
-              shape: 'diamond',
-              size: 100,
-              label: 'diamond',
-            }"
-            >
-              <img
-                src="https://gw.alicdn.com/tfs/TB1EB9VnNz1gK0jSZSgXXavwpXa-178-184.png"
-                width="89"
-                height="92"
-                :draggable="false"
-              />
-            </Item>
-            <Item
-              :model="{
-              shape: 'bizFlowNode',
-              size: [112, 66],
-              label: 'bizFlowNode',
-              center: 'topLeft',
-            }"
-            >
-              <img
-                src="https://gw.alicdn.com/tfs/TB1_cbfnHj1gK0jSZFuXXcrHpXa-244-132.png"
-                width="112"
-                height="66"
-                :draggable="false"
-              />
-            </Item>
+            <slot name="item"></slot>            
           </ItemPanel>
         </div>
       </div>

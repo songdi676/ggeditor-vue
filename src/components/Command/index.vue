@@ -51,8 +51,8 @@ export default class Command extends Vue {
     mounted() {
     this.$nextTick(function() {
       const graph=global.graph;
-       this.disabled = !commandManager.canExecute(graph, this.$props.name);
-    graph.on(EditorEvent.onGraphStateChange, () => {
+      this.disabled = !commandManager.canExecute(graph, this.$props.name);
+      graph.on(EditorEvent.onGraphStateChange, () => {
       this.disabled = !commandManager.canExecute(graph, this.$props.name);
     });
     });

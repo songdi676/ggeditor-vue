@@ -31,7 +31,7 @@ export default class ItemPanel extends Vue {
   }
 
   handleMouseUp() {
-    const graph = this.graph;
+    const graph = global.graph;
 
     if (graph.getCurrentMode() === GraphMode.Default) {
       return;
