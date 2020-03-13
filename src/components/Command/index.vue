@@ -6,7 +6,7 @@
     @click="handleClick"
     :icon="getEditorCommandIcon(name)"
   >
-    <a class="active" :title="name">
+    <a class="active" :title="getEditorCommandIconName(name)">
       <span :class="['iconfont ', getEditorCommandIcon(name)]" ></span>
     </a>
     <!-- {{ name }} -->
@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
-import { EditorEvent, EditorCommandIcon } from "@/common/constants";
+import { EditorEvent, EditorCommandIcon, EditorCommandName} from "@/common/constants";
 import { GraphStateEvent } from "@/common/interfaces";
 import global from "@/common/global";
 import commandManager from "@/common/commandManager";
@@ -39,6 +39,9 @@ export default class Command extends Vue {
   disabled = false;
   getEditorCommandIcon(name) {
     return EditorCommandIcon[name];
+  }
+  getEditorCommandIconName(name) {
+    return EditorCommandName[name];
   }
   @Watch("$store.state.graph")
   graphChange(to: any, from: any) {

@@ -132,4 +132,10 @@ export default class Graph extends Vue {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style scoped>
+.canvasPanel > div .g6-minimap {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+</style>
