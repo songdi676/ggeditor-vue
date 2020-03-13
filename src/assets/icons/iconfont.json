@@ -1,16 +1,72 @@
 {
-  "id": "1686992",
-  "name": "paas",
+  "id": "",
+  "name": "",
   "font_family": "iconfont",
   "css_prefix_text": "icon-",
   "description": "",
   "glyphs": [
     {
-      "icon_id": "10502043",
-      "name": "删除",
-      "font_class": "ziyuan",
-      "unicode": "e6a5",
-      "unicode_decimal": 59045
+      "icon_id": "1040330",
+      "name": "zoom in",
+      "font_class": "zoomin",
+      "unicode": "e76d",
+      "unicode_decimal": 59245
+    },
+    {
+      "icon_id": "1040331",
+      "name": "zoom out",
+      "font_class": "zoomout",
+      "unicode": "e76e",
+      "unicode_decimal": 59246
+    },
+    {
+      "icon_id": "1425910",
+      "name": "收起",
+      "font_class": "shouqi",
+      "unicode": "e840",
+      "unicode_decimal": 59456
+    },
+    {
+      "icon_id": "1425911",
+      "name": "展开",
+      "font_class": "zhankai",
+      "unicode": "e841",
+      "unicode_decimal": 59457
+    },
+    {
+      "icon_id": "1898667",
+      "name": "copy",
+      "font_class": "copy",
+      "unicode": "e662",
+      "unicode_decimal": 58978
+    },
+    {
+      "icon_id": "1927252",
+      "name": "undo",
+      "font_class": "undo",
+      "unicode": "e65a",
+      "unicode_decimal": 58970
+    },
+    {
+      "icon_id": "6808362",
+      "name": "Redo",
+      "font_class": "Redo",
+      "unicode": "ed8a",
+      "unicode_decimal": 60810
+    },
+    {
+      "icon_id": "12310509",
+      "name": "trash",
+      "font_class": "trash",
+      "unicode": "e8b7",
+      "unicode_decimal": 59575
+    },
+    {
+      "icon_id": "12579410",
+      "name": "paste",
+      "font_class": "paste",
+      "unicode": "e753",
+      "unicode_decimal": 59219
     }
   ]
 }

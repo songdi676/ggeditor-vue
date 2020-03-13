@@ -89,33 +89,33 @@ export enum EditorCommand {
 
 export enum EditorCommandIcon {
   /** 撤销 */
-  undo = "reply",
+  undo = "icon-undo",
   /** 重做 */
-  redo = "share",
+  redo = "icon-Redo",
   /** 添加 */
   add = "files-o",
   /** 更新 */
   update = "coffee",
   /** 删除 */
-  remove = "trash",
+  remove = "icon-trash",
   /** 复制 */
-  copy = "copy",
+  copy = "icon-copy",
   /** 粘贴 */
-  paste = "paste",
+  paste = "icon-paste",
   /** 粘贴到这里 */
   pasteHere = "coffee",
   /** 放大 */
-  zoomIn = "search-plus",
+  zoomIn = "icon-zoomin",
   /** 缩小 */
-  zoomOut = "search-minus",
+  zoomOut = "icon-zoomout",
   /** 插入主题 */
   topic = "coffee",
   /** 插入子主题 */
   subtopic = "coffee",
   /** 收起 */
-  fold = "el-icon-s-fold",
+  fold = "icon-shouqi",
   /** 展开 */
-  unfold = "el-icon-s-unfold"
+  unfold = "icon-zhankai"
 }
 
 export enum GraphCommonEvent {

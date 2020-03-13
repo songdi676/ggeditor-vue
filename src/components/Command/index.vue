@@ -6,9 +6,9 @@
     @click="handleClick"
     :icon="getEditorCommandIcon(name)"
   >
-    <i class="active">
-      <font-awesome-icon :icon="['fas', getEditorCommandIcon(name)]" />
-    </i>
+    <a class="active" :title="name">
+      <span :class="['iconfont ', getEditorCommandIcon(name)]" ></span>
+    </a>
     <!-- {{ name }} -->
   </li>
 </template>
@@ -76,7 +76,7 @@ export default class Command extends Vue {
   -webkit-user-select: none;
   -ms-user-select: none;
 }
-.toolbar ul li i {
+.toolbarElement ul li a {
     display: inline-block;
     width: 27px;
     height: 27px;
@@ -85,12 +85,12 @@ export default class Command extends Vue {
     text-align: center;
     border: 1px solid #fff;
     cursor: pointer;
-    color: #6e6e6e;
+    color: #333;
 }
-.toolbar .command i:hover {
+.toolbarElement .command a:hover {
     border: 1px solid #e6e9ed;
 }
-.toolbar .command-disabled i {
+.toolbarElement .command-disabled a {
     color: rgba(0,0,0,0.25);
     cursor: auto;
 }

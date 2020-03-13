@@ -2,7 +2,7 @@
   <div class="editor">
     <div class="toolBarPanel g-row">
       <div class="g-col-24">
-        <div class="toolbar">
+        <div class="toolbarElement">
           <ul v-for="buttonGroup in FLOW_COMMAND_LIST" :key="buttonGroup.index">
             <Command
               v-for="button in buttonGroup"
@@ -327,12 +327,12 @@ export default class Editor extends Vue {
 .item:last-child {
   border-bottom: none;
 }
-.toolbar ul {
+.toolbarElement ul {
   overflow: auto;
   vertical-align: middle;
   float: left;
 }
-.toolbar ul li {
+.toolbarElement ul li {
   float: left;
   padding: 0 8px;
   list-style: none;
