@@ -34,12 +34,12 @@ export default {
     flowData: {
       nodes: [
         {
-          id: "0",
-          label: "脚本数量：",
+          id: "0",//必须
+          label: "脚本数量：",//就是节点名字
           x: 55,
           y: 55,
           shape: 'bizFlowNode',
-          data:[
+          data:[//业务数据岁表定义
             {
               name:"执行sql"
             },
