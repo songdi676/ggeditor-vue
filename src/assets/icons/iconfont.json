@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "579386",
+      "name": "缩小",
+      "font_class": "suoxiao",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "587019",
+      "name": "paste",
+      "font_class": "paste",
+      "unicode": "e7a6",
+      "unicode_decimal": 59302
+    },
+    {
+      "icon_id": "1010015",
+      "name": "缩小",
+      "font_class": "suoxiao1",
+      "unicode": "e744",
+      "unicode_decimal": 59204
+    },
+    {
       "icon_id": "1040330",
       "name": "zoom in",
       "font_class": "zoomin",
@@ -18,6 +39,20 @@
       "font_class": "zoomout",
       "unicode": "e76e",
       "unicode_decimal": 59246
+    },
+    {
+      "icon_id": "1045033",
+      "name": "delete",
+      "font_class": "delete",
+      "unicode": "e63a",
+      "unicode_decimal": 58938
+    },
+    {
+      "icon_id": "1251386",
+      "name": "zoom-out",
+      "font_class": "zoom-out",
+      "unicode": "e6a2",
+      "unicode_decimal": 59042
     },
     {
       "icon_id": "1425910",
@@ -34,6 +69,13 @@
       "unicode_decimal": 59457
     },
     {
+      "icon_id": "1724905",
+      "name": "放大",
+      "font_class": "fangda",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
       "icon_id": "1898667",
       "name": "copy",
       "font_class": "copy",
@@ -48,11 +90,32 @@
       "unicode_decimal": 58970
     },
     {
+      "icon_id": "4801990",
+      "name": "复制",
+      "font_class": "fuzhi",
+      "unicode": "e775",
+      "unicode_decimal": 59253
+    },
+    {
+      "icon_id": "6145739",
+      "name": "zoom-in",
+      "font_class": "zoom-in",
+      "unicode": "e6a7",
+      "unicode_decimal": 59047
+    },
+    {
       "icon_id": "6808362",
       "name": "Redo",
       "font_class": "Redo",
       "unicode": "ed8a",
       "unicode_decimal": 60810
+    },
+    {
+      "icon_id": "9626858",
+      "name": "放大",
+      "font_class": "fangda1",
+      "unicode": "e86c",
+      "unicode_decimal": 59500
     },
     {
       "icon_id": "12310509",
@@ -64,7 +127,7 @@
     {
       "icon_id": "12579410",
       "name": "paste",
-      "font_class": "paste",
+      "font_class": "paste1",
       "unicode": "e753",
       "unicode_decimal": 59219
     }

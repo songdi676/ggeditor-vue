@@ -1,5 +1,5 @@
 <template>
-  <div class="itemOutSide"><slot></slot></div>
+  <div class="ggeditor-itemOutSide"><slot></slot></div>
 </template>
 
 <script lang="ts">

@@ -1,5 +1,5 @@
 <template>
-  <div class="item" @mousedown="handleMouseDown">
+  <div class="ggeditor-item" @mousedown="handleMouseDown">
     <slot></slot>
   </div>
 </template>
@@ -41,7 +41,7 @@ export default class Item extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.item {
+.ggeditor-item {
   min-height: 70px;
   display: flex;
   align-items: center;

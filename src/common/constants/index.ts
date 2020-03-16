@@ -97,25 +97,25 @@ export enum EditorCommandIcon {
   /** 更新 */
   update = "coffee",
   /** 删除 */
-  remove = "icon-trash",
+  remove = "icon-delete",
   /** 复制 */
-  copy = "icon-copy",
+  copy = "icon-fuzhi",
   /** 粘贴 */
   paste = "icon-paste",
   /** 粘贴到这里 */
   pasteHere = "coffee",
   /** 放大 */
-  zoomIn = "icon-zoomin",
+  zoomIn = "icon-zoom-in",
   /** 缩小 */
-  zoomOut = "icon-zoomout",
+  zoomOut = "icon-zoom-out",
   /** 插入主题 */
   topic = "coffee",
   /** 插入子主题 */
   subtopic = "coffee",
   /** 收起 */
-  fold = "icon-shouqi",
+  fold = "icon-suoxiao",
   /** 展开 */
-  unfold = "icon-zhankai"
+  unfold = "icon-fangda"
 }
 export enum EditorCommandName {
   /** 撤销 */

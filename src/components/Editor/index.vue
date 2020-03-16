@@ -1,8 +1,8 @@
 <template>
-  <div class="editor">
-    <div class="toolBarPanel g-row">
-      <div class="g-col-24">
-        <div class="toolbarElement">
+  <div class="ggeditor">
+    <div class="ggeditor-toolBarPanel ggeditor-row">
+      <div class="ggeditor-col-24">
+        <div class="ggeditor-toolbarElement">
           <ul v-for="buttonGroup in FLOW_COMMAND_LIST" :key="buttonGroup.index">
             <Command
               v-for="button in buttonGroup"
@@ -14,15 +14,15 @@
         </div>
       </div>
     </div>
-    <div class="mainPanel g-row">
-      <div class="g-col-3 sideBar">
+    <div class="ggeditor-mainPanel ggeditor-row">
+      <div class="ggeditor-col-3 ggeditor-sideBar">
         <div>
           <ItemPanel>
             <slot name="item"></slot>
           </ItemPanel>
         </div>
       </div>
-      <div class="g-col-21 canvasPanel">
+      <div class="ggeditor-col-21 ggeditor-canvasPanel">
         <Flow :flowProps="flowProps" :setGraph="setGraph" />
       </div>
     </div>
@@ -217,7 +217,7 @@ export default class Editor extends Vue {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 
 <style scoped>
-.editor {
+.ggeditor {
   position: relative;
   width: 100%;
   user-select: none;
@@ -228,50 +228,50 @@ export default class Editor extends Vue {
   display: flex;
   flex-direction: column;
 }
-.mainPanel {
+.ggeditor-mainPanel {
   flex: 1;
   display: flex;
   height: 100%;
   overflow: hidden;
 }
-.sideBar {
+.ggeditor-sideBar {
   background-color: #f6f6f6;
   border-right: 1px solid #e6e9ed;
   display: flex;
   justify-content: center;
 }
-.toolBarPanel {
+.ggeditor-toolBarPanel {
   border: 1px solid #e6e9ed;
   padding: 2px;
 }
-.itemOutSide {
+.ggeditor-itemOutSide {
   height: 100%;
   margin-right: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.item {
+.ggeditor-item {
   min-height: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 15px 0;
 }
-.item:last-child {
+.ggeditor-item:last-child {
   border-bottom: none;
 }
-.toolbarElement ul {
+.ggeditor-toolbarElement ul {
   overflow: auto;
   vertical-align: middle;
   float: left;
 }
-.toolbarElement ul li {
+.ggeditor-toolbarElement ul li {
   float: left;
   padding: 0 8px;
   list-style: none;
 }
-.canvasPanel {
+.ggeditor-canvasPanel {
   flex: 1;
   border-right: 1px solid #ededed;
   height: 100%;
@@ -280,100 +280,100 @@ export default class Editor extends Vue {
   display: flex;
   width: 85.5%;
 }*/
-.canvasPanel > div .g6-minimap {
+.ggeditor-canvasPanel > div .g6-minimap {
   position: absolute;
   top: 0;
   right: 0;
 }
 
 /* 布局 */
-.g-row {
+.ggeditor-row {
   position: relative;
   box-sizing: border-box;
 }
 
-[class*="g-col-"] {
+[class*="ggeditor-col-"] {
   float: left;
   box-sizing: border-box;
 }
-.g-row:after {
+.ggeditor-row:after {
   clear: both;
 }
-.g-row:after,
-.g-row:before {
+.ggeditor-row:after,
+.ggeditor-row:before {
   display: table;
   content: "";
 }
-.g-col-1 {
+.ggeditor-col-1 {
   width: 4.16667%;
 }
-.g-col-2 {
+.ggeditor-col-2 {
   width: 8.333333%;
 }
-.g-col-3 {
+.ggeditor-col-3 {
   width: 12.5%;
 }
-.g-col-4 {
+.ggeditor-col-4 {
   width: 16.66667%;
 }
-.g-col-5 {
+.ggeditor-col-5 {
   width: 20.83333%;
 }
-.g-col-6 {
+.ggeditor-col-6 {
   width: 25%;
 }
-.g-col-7 {
+.ggeditor-col-7 {
   width: 29.16667%;
 }
-.g-col-8 {
+.ggeditor-col-8 {
   width: 33.33333%;
 }
-.g-col-9 {
+.ggeditor-col-9 {
   width: 37.5%;
 }
-.g-col-10 {
+.ggeditor-col-10 {
   width: 41.66667%;
 }
-.g-col-11 {
+.ggeditor-col-11 {
   width: 45.83333%;
 }
-.g-col-12 {
+.ggeditor-col-12 {
   width: 50%;
 }
-.g-col-13 {
+.ggeditor-col-13 {
   width: 54.16667%;
 }
-.g-col-14 {
+.ggeditor-col-14 {
   width: 58.33333%;
 }
-.g-col-15 {
+.ggeditor-col-15 {
   width: 62.5%;
 }
-.g-col-16 {
+.ggeditor-col-16 {
   width: 66.66667%;
 }
-.g-col-17 {
+.ggeditor-col-17 {
   width: 70.83333%;
 }
-.g-col-18 {
+.ggeditor-col-18 {
   width: 75%;
 }
-.g-col-19 {
+.ggeditor-col-19 {
   width: 79.16667%;
 }
-.g-col-20 {
+.ggeditor-col-20 {
   width: 83.33333%;
 }
-.g-col-21 {
+.ggeditor-col-21 {
   width: 87.5%;
 }
-.g-col-23 {
+.ggeditor-col-23 {
   width: 95.83333%;
 }
-.g-col-22 {
+.ggeditor-col-22 {
   width: 91.66667%;
 }
-.g-col-24 {
+.ggeditor-col-24 {
   width: 100%;
 }
 </style>

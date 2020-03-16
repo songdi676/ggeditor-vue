@@ -71,7 +71,7 @@ export default class Command extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.editor {
+.ggeditor-editor {
   position: relative;
   width: 100%;
   user-select: none;
@@ -79,7 +79,7 @@ export default class Command extends Vue {
   -webkit-user-select: none;
   -ms-user-select: none;
 }
-.toolbarElement ul li a {
+.ggeditor-toolbarElement ul li a {
     display: inline-block;
     width: 27px;
     height: 27px;
@@ -90,10 +90,10 @@ export default class Command extends Vue {
     cursor: pointer;
     color: #333;
 }
-.toolbarElement .command a:hover {
+.ggeditor-toolbarElement .command a:hover {
     border: 1px solid #e6e9ed;
 }
-.toolbarElement .command-disabled a {
+.ggeditor-toolbarElement .command-disabled a {
     color: rgba(0,0,0,0.25);
     cursor: auto;
 }
