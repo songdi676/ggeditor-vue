@@ -84,7 +84,7 @@ export default class Command extends Vue {
     width: 27px;
     height: 27px;
     margin: 0 6px;
-    padding-top: 10px;
+    padding: 8px 0;
     text-align: center;
     border: 1px solid #fff;
     cursor: pointer;
