@@ -1,34 +1,30 @@
-import pick from "lodash/pick";
-import commandManager from "@/common/commandManager";
-import { BaseCommand, baseCommand } from "@/components/Graph/command/base";
+import pick from 'lodash/pick';
+import { Graph, TreeGraph, NodeModel, EdgeModel } from '@/common/interfaces';
+import { BaseCommand, baseCommand } from '@/components/Graph/command/base';
 
-interface UpdateCommandParams {
+export interface UpdateCommandParams {
   id: string;
-  originModel: object;
-  updateModel: object;
+  originModel: Partial<NodeModel> | EdgeModel;
+  updateModel: Partial<NodeModel> | EdgeModel;
   forceRefreshLayout: boolean;
 }
 
-const updateCommand: BaseCommand<
-  UpdateCommandParams,
-  G6.Graph & G6.TreeGraph
-> = {
+const updateCommand: BaseCommand<UpdateCommandParams, Graph & TreeGraph> = {
   ...baseCommand,
 
   params: {
-    id: "",
+    id: '',
     originModel: {},
     updateModel: {},
-    forceRefreshLayout: false
+    forceRefreshLayout: false,
   },
 
   canExecute(graph) {
     const selectedNodes = this.getSelectedNodes(graph);
     const selectedEdges = this.getSelectedEdges(graph);
-    return !!(
-      (selectedNodes.length || selectedEdges.length) &&
-      (selectedNodes.length === 1 || selectedEdges.length === 1)
-    );
+    return (selectedNodes.length || selectedEdges.length) && (selectedNodes.length === 1 || selectedEdges.length === 1)
+      ? true
+      : false;
   },
 
   init(graph) {
@@ -54,7 +50,7 @@ const updateCommand: BaseCommand<
     const { id, originModel } = this.params;
 
     graph.updateItem(id, originModel);
-  }
+  },
 };
 
-commandManager.register("update", updateCommand);
+export default updateCommand;

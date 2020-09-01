@@ -1,4 +1,5 @@
 import { guid } from "@/utils";
+import { Graph } from '@/common/interfaces';
 import { NodeModel } from "@/common/interfaces";
 
 class Global {
@@ -8,8 +9,8 @@ class Global {
   /** 埋点开关 */
   trackable = true;
 
-    /** 实例 */
-  graph: G6.Graph | null = null;
+  /** 实例 */
+  graph: Graph | null = null;
 
   /** 剪贴板 */
   clipboard: {
@@ -19,12 +20,12 @@ class Global {
     };
     models: NodeModel[];
   } = {
-    point: {
-      x: 0,
-      y: 0
-    },
-    models: []
-  };
+      point: {
+        x: 0,
+        y: 0
+      },
+      models: []
+    };
 
   /** 组件数据 */
   component: {
@@ -33,11 +34,11 @@ class Global {
       delegateShapeClassName: string;
     };
   } = {
-    itemPanel: {
-      model: null,
-      delegateShapeClassName: `delegateShape_${guid()}`
-    }
-  };
+      itemPanel: {
+        model: null,
+        delegateShapeClassName: `delegateShape_${guid()}`
+      }
+    };
 
   /** 插件数据 */
   plugin: {
@@ -51,16 +52,16 @@ class Global {
       state: "show" | "hide";
     };
   } = {
-    itemPopover: {
-      state: "hide"
-    },
-    contextMenu: {
-      state: "hide"
-    },
-    editableLabel: {
-      state: "hide"
-    }
-  };
+      itemPopover: {
+        state: "hide"
+      },
+      contextMenu: {
+        state: "hide"
+      },
+      editableLabel: {
+        state: "hide"
+      }
+    };
 }
 
 export default new Global();

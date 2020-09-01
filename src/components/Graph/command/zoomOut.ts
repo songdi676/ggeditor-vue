@@ -1,5 +1,4 @@
-import commandManager from "@/common/commandManager";
-import { BaseCommand, baseCommand } from "@/components/Graph/command/base";
+import { BaseCommand, baseCommand } from '@/components/Graph/command/base';
 
 const DELTA = 0.05;
 
@@ -14,7 +13,7 @@ const zoomOutCommand: BaseCommand = {
     const ratio = 1 - DELTA;
 
     const zoom = graph.getZoom() * ratio;
-    const minZoom = graph.get("minZoom");
+    const minZoom = graph.get('minZoom');
 
     if (zoom < minZoom) {
       return;
@@ -24,9 +23,9 @@ const zoomOutCommand: BaseCommand = {
   },
 
   shortcuts: [
-    ["metaKey", "-"],
-    ["ctrlKey", "-"]
-  ]
+    ['metaKey', '-'],
+    ['ctrlKey', '-'],
+  ],
 };
 
-commandManager.register("zoomOut", zoomOutCommand);
+export default zoomOutCommand;

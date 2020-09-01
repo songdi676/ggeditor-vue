@@ -1,11 +1,13 @@
-import commandManager from "@/common/commandManager";
+import { Command } from '@/common/interfaces';
+import CommandManager from '@/common/CommandManager';
 
-commandManager.register("redo", {
-  name: "redo",
+const redoCommand: Command = {
+  name: 'redo',
 
   params: {},
 
-  canExecute() {
+  canExecute(graph) {
+    const commandManager: CommandManager = graph.get('commandManager');
     const { commandQueue, commandIndex } = commandManager;
 
     return commandIndex < commandQueue.length;
@@ -22,6 +24,7 @@ commandManager.register("redo", {
   init() {},
 
   execute(graph) {
+    const commandManager: CommandManager = graph.get('commandManager');
     const { commandQueue, commandIndex } = commandManager;
 
     commandQueue[commandIndex].execute(graph);
@@ -32,7 +35,9 @@ commandManager.register("redo", {
   undo() {},
 
   shortcuts: [
-    ["metaKey", "shiftKey", "z"],
-    ["ctrlKey", "shiftKey", "z"]
-  ]
-});
+    ['metaKey', 'shiftKey', 'z'],
+    ['ctrlKey', 'shiftKey', 'z'],
+  ],
+};
+
+export default redoCommand;

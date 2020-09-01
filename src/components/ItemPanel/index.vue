@@ -7,7 +7,7 @@ import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import pick from "lodash/pick";
 import global from "@/common/global";
 import { GraphMode } from "@/common/constants";
-import { G } from "@antv/g6/types/g";
+import { GShape, GGroup } from '@/common/interfaces';
 import { EditorContextProps } from "@/components/EditorContext";
 
 @Component
@@ -37,10 +37,10 @@ export default class ItemPanel extends Vue {
       return;
     }
 
-    const group: G.Group = graph.get("group");
-    const shape: G.Shape = group.findByClassName(
+    const group: GGroup = graph.get("group");
+    const shape: GShape = group.findByClassName(
       global.component.itemPanel.delegateShapeClassName
-    ) as G.Shape;
+    ) as GShape;
 
     if (shape) {
       shape.remove(true);

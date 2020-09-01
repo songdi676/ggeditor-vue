@@ -1,19 +1,13 @@
-import isArray from "lodash/isArray";
-import { guid } from "@/utils";
-import global from "@/common/global";
-import {
-  ItemType,
-  GraphType,
-  GraphMode,
-  EditorCommand
-} from "@/common/constants";
-import { NodeModel, Behavior, GraphEvent } from "@/common/interfaces";
-import { G } from "@antv/g6/types/g";
-import commandManager from "@/common/commandManager";
-import behaviorManager from "@/common/behaviorManager";
+import isArray from 'lodash/isArray';
+import { guid } from '@/utils';
+import global from '@/common/global';
+import { ItemType, GraphType, GraphMode, EditorCommand } from '@/common/constants';
+import { GShape, GGroup, NodeModel, Behavior, GraphEvent } from '@/common/interfaces';
+import CommandManager from '@/common/CommandManager';
+import behaviorManager from '@/common/behaviorManager';
 
 interface DragAddNodeBehavior extends Behavior {
-  shape: G.Shape | null;
+  shape: GShape | null;
   handleCanvasMouseEnter(e: GraphEvent): void;
   handleMouseMove(e: GraphEvent): void;
   handleMouseUp(e: GraphEvent): void;
@@ -28,9 +22,9 @@ const dragAddNodeBehavior: DragAddNodeBehavior = {
 
   getEvents() {
     return {
-      "canvas:mouseenter": "handleCanvasMouseEnter",
-      mousemove: "handleMouseMove",
-      mouseup: "handleMouseUp"
+      'canvas:mouseenter': 'handleCanvasMouseEnter',
+      mousemove: 'handleMouseMove',
+      mouseup: 'handleMouseUp',
     };
   },
 
@@ -41,8 +35,8 @@ const dragAddNodeBehavior: DragAddNodeBehavior = {
       return;
     }
 
-    const group: G.Group = graph.get("group");
-    const model: NodeModel = global.component.itemPanel.model;
+    const group: GGroup = graph.get('group');
+    const model: Partial<NodeModel> = global.component.itemPanel.model;
 
     const { size = 100 } = model;
 
@@ -52,27 +46,24 @@ const dragAddNodeBehavior: DragAddNodeBehavior = {
     if (isArray(size)) {
       width = size[0];
       height = size[1];
-    } else {
-      width = <number>size;
-      height = <number>size;
     }
 
     const x = e.x - width / 2;
     const y = e.y - height / 2;
 
-    this.shape = group.addShape("rect", {
+    this.shape = group.addShape('rect', {
       className: global.component.itemPanel.delegateShapeClassName,
       attrs: {
         x,
         y,
         width,
         height,
-        fill: "#f3f9ff",
+        fill: '#f3f9ff',
         fillOpacity: 0.5,
-        stroke: "#1890ff",
+        stroke: '#1890ff',
         strokeOpacity: 0.9,
-        lineDash: [5, 5]
-      }
+        lineDash: [5, 5],
+      },
     });
 
     graph.paint();
@@ -87,7 +78,7 @@ const dragAddNodeBehavior: DragAddNodeBehavior = {
 
     this.shape.attr({
       x,
-      y
+      y,
     });
 
     graph.paint();
@@ -100,14 +91,16 @@ const dragAddNodeBehavior: DragAddNodeBehavior = {
     let x = e.x;
     let y = e.y;
 
-    const model: NodeModel = global.component.itemPanel.model;
+    const model: Partial<NodeModel> = global.component.itemPanel.model;
 
-    if (model.center === "topLeft") {
+    if (model.center === 'topLeft') {
       x -= width / 2;
       y -= height / 2;
     }
 
     this.shape.remove(true);
+
+    const commandManager: CommandManager = graph.get('commandManager');
 
     commandManager.execute(graph, EditorCommand.Add, {
       type: ItemType.Node,
@@ -115,10 +108,10 @@ const dragAddNodeBehavior: DragAddNodeBehavior = {
         id: guid(),
         x,
         y,
-        ...model
-      }
+        ...model,
+      },
     });
-  }
+  },
 };
 
-behaviorManager.register("drag-add-node", dragAddNodeBehavior);
+behaviorManager.register('drag-add-node', dragAddNodeBehavior);

@@ -1,10 +1,9 @@
-import { isMind, executeBatch } from "@/utils";
-import { ItemType } from "@/common/constants";
-import { NodeModel, EdgeModel, MindData } from "@/common/interfaces";
-import commandManager from "@/common/commandManager";
-import { BaseCommand, baseCommand } from "@/components/Graph/command/base";
+import { isMind, executeBatch } from '@/utils';
+import { ItemType } from '@/common/constants';
+import { TreeGraph, MindData, NodeModel, EdgeModel } from '@/common/interfaces';
+import { BaseCommand, baseCommand } from '@/components/Graph/command/base';
 
-interface RemoveCommandParams {
+export interface RemoveCommandParams {
   flow: {
     nodes: {
       [id: string]: NodeModel;
@@ -25,12 +24,12 @@ const removeCommand: BaseCommand<RemoveCommandParams> = {
   params: {
     flow: {
       nodes: {},
-      edges: {}
+      edges: {},
     },
     mind: {
       model: null,
-      parent: ""
-    }
+      parent: '',
+    },
   },
 
   canExecute(graph) {
@@ -46,22 +45,20 @@ const removeCommand: BaseCommand<RemoveCommandParams> = {
 
     if (isMind(graph)) {
       const selectedNode = selectedNodes[0];
-      const selectedNodeModel = selectedNode.getModel();
+      const selectedNodeModel = selectedNode.getModel() as MindData;
 
-      const selectedNodeParent = selectedNode.get("parent");
-      const selectedNodeParentModel = selectedNodeParent
-        ? selectedNodeParent.getModel()
-        : {};
+      const selectedNodeParent = selectedNode.get('parent');
+      const selectedNodeParentModel = selectedNodeParent ? selectedNodeParent.getModel() : {};
 
       this.params.mind = {
         model: selectedNodeModel,
-        parent: selectedNodeParentModel.id
+        parent: selectedNodeParentModel.id,
       };
     } else {
       const { nodes, edges } = this.params.flow;
 
       selectedNodes.forEach(node => {
-        const nodeModel = node.getModel();
+        const nodeModel = node.getModel() as NodeModel;
         const nodeEdges = node.getEdges();
 
         nodes[nodeModel.id] = nodeModel;
@@ -89,7 +86,7 @@ const removeCommand: BaseCommand<RemoveCommandParams> = {
         return;
       }
 
-      (graph as G6.TreeGraph).removeChild(model.id);
+      (graph as TreeGraph).removeChild(model.id);
     } else {
       const { nodes, edges } = this.params.flow;
 
@@ -109,7 +106,7 @@ const removeCommand: BaseCommand<RemoveCommandParams> = {
         return;
       }
 
-      (graph as G6.TreeGraph).addChild(model, parent);
+      (graph as TreeGraph).addChild(model, parent);
     } else {
       const { nodes, edges } = this.params.flow;
 
@@ -129,7 +126,7 @@ const removeCommand: BaseCommand<RemoveCommandParams> = {
     }
   },
 
-  shortcuts: ["Delete", "Backspace"]
+  shortcuts: ['Delete', 'Backspace'],
 };
 
-commandManager.register("remove", removeCommand);
+export default removeCommand;

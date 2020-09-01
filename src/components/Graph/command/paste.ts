@@ -1,19 +1,18 @@
-import { guid, executeBatch } from "@/utils";
-import global from "@/common/global";
-import { ItemType } from "@/common/constants";
-import { NodeModel } from "@/common/interfaces";
-import commandManager from "@/common/commandManager";
-import { BaseCommand, baseCommand } from "@/components/Graph/command/base";
+import { guid, executeBatch } from '@/utils';
+import global from '@/common/global';
+import { ItemType } from '@/common/constants';
+import { NodeModel } from '@/common/interfaces';
+import { BaseCommand, baseCommand } from '@/components/Graph/command/base';
 
-interface PasteCommandParams {
+export interface PasteCommandParams {
   models: NodeModel[];
 }
 
-export const pasteCommand: BaseCommand<PasteCommandParams> = {
+const pasteCommand: BaseCommand<PasteCommandParams> = {
   ...baseCommand,
 
   params: {
-    models: []
+    models: [],
   },
 
   canExecute() {
@@ -34,9 +33,9 @@ export const pasteCommand: BaseCommand<PasteCommandParams> = {
           ...model,
           id: guid(),
           x: x + offsetX,
-          y: y + offsetY
+          y: y + offsetY,
         };
-      })
+      }),
     };
   },
 
@@ -51,7 +50,7 @@ export const pasteCommand: BaseCommand<PasteCommandParams> = {
 
     this.setSelectedItems(
       graph,
-      models.map(model => model.id)
+      models.map(model => model.id),
     );
   },
 
@@ -66,9 +65,9 @@ export const pasteCommand: BaseCommand<PasteCommandParams> = {
   },
 
   shortcuts: [
-    ["metaKey", "v"],
-    ["ctrlKey", "v"]
-  ]
+    ['metaKey', 'v'],
+    ['ctrlKey', 'v'],
+  ],
 };
 
-commandManager.register("paste", pasteCommand);
+export default pasteCommand;

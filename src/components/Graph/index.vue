@@ -17,17 +17,16 @@ import {
   GraphCustomEvent
 } from "@/common/constants";
 import {
+  Graph,
   FlowData,
   MindData,
   GraphNativeEvent,
   GraphReactEvent,
-  GraphReactEventProps
-} from "@/common/interfaces";
+  GraphReactEventProps,
+} from '@/common/interfaces';
 import { EditorPrivateContextProps } from "@/components/EditorContext";
-import Minimap from "@antv/g6/build/minimap";
-import Grid from "@antv/g6/build/grid";
-
-import "./command";
+import baseCommands from './command';
+import eventBus from '@/utils/eventBus'
 import "./behavior";
 
 interface GraphProps
@@ -40,11 +39,11 @@ interface GraphProps
   showgrid: boolean;
   data: FlowData | MindData;
   parseData(data: object): void;
-  initGraph(width: number, height: number): G6.Graph;
+  initGraph(width: number, height: number): Graph;
 }
 @Component
-export default class Graph extends Vue {
-  graph: G6.Graph | null = null;
+export default class GraphComponent extends Vue {
+  graph: Graph | null = null;
   @Prop() private graphProps!: GraphProps;
   mounted() {
     this.initGraph();
@@ -77,40 +76,47 @@ export default class Graph extends Vue {
       }
     });
   }
-
-  initGraph() {
-    const {
+initGraph() {
+     const {
       containerId,
       parseData,
       initGraph,
       setGraph,
-      showMiniMap,
-      showgrid
+      commandManager
     } = this.$props.graphProps;
-    const { clientWidth = 200, clientHeight = 200 } =
-      document.getElementById(containerId) || {};
+    const { clientWidth = 200, clientHeight = 200 } = document.getElementById(containerId) || {};
 
     // 解析数据
     const data = { ...this.$props.graphProps.data };
+
     parseData(data);
 
     // 初始画布
-    this.graph = initGraph(clientWidth, 800);
-
-    this.graph.read(data);
-    if (!showMiniMap) {
-      const minimap = new Minimap();
-      this.graph.addPlugin(minimap);
-    }
-    if (!showgrid) {
-      const grid = new Grid();
-      this.graph.addPlugin(grid);
-    }
+    this.graph = initGraph(1600, 1000);
+    this.graph.data(data);
+    this.graph.render();
     this.focusRootNode(this.graph, data);
-    this.graph.setMode("default");
+    this.graph.setMode('default');
 
     setGraph(this.graph);
 
+    // 设置命令管理器
+    this.graph.set('commandManager', commandManager);
+
+    // 注册命令
+    let commands = baseCommands;
+
+    if (isMind(this.graph)) {
+      commands = {
+        ...commands,
+        //...mindCommands,
+      };
+    }
+
+    Object.keys(commands).forEach(name => {
+      commandManager.register(name, commands[name]);
+    });
+    eventBus.$emit('command-registered', commandManager)
     // 发送埋点
     if (global.trackable) {
       const graphType = isMind(this.graph) ? GraphType.Mind : GraphType.Flow;
@@ -119,7 +125,7 @@ export default class Graph extends Vue {
     }
   }
 
-  focusRootNode(graph: G6.Graph, data: FlowData | MindData) {
+  focusRootNode(graph: Graph, data: FlowData | MindData) {
     if (!isMind(graph)) {
       return;
     }

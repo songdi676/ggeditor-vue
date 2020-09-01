@@ -32,57 +32,95 @@ export default {
   data(){
     return   {
     flowData: {
+   
       nodes: [
         {
+          size: [25, 25],
+          title: 'node1',
+           comboId: 'combo2', x: 1500, y: 1500,
+      error: true,
+      nodeType: 'a',
+      nodeLevel: 2,
+          name: 'card-node2',
+          collapse: true,
+      ip: '127.0.0.1',
+      nodeError: true,
+      dataType: 'root',
+      keyInfo: 'this is a card node info',
+      x: 100,
+      y: 50,
+
           id: "0",//必须
-          label: "脚本数量：",//就是节点名字
-          x: 55,
-          y: 55,
-          shape: 'bizFlowNode',
-          data:[//业务数据岁表定义
-            {
-              name:"执行sql"
-            },
-            {
-              name:"数据初始化"
-            }
-          ]
+          label: "java",//就是节点名字 
+          //shape: 'docker',
+          type: 'docker',
+          anchorPoints: [
+        [0, 1],
+        [0.5, 1],
+      ],
         },
         {
+          size: [25, 25],
+                    name: 'cardNodeApp',
+                    collapse: true,
+          ip: '127.0.0.1',
+          nodeError: true,
+          dataType: 'root',
+          keyInfo: 'this is a card node info',
+          x: 100,
+          y: 50,
           id: "1",
-          label: "应用数量：",
-          x: 55,
-          y: 255,
-          shape: 'bizFlowNode',
-          data:[
-            {
-              name:"启动：app"
-            },
-            {
-              name:"停止app"
-            }
-          ]
+          label: "ngnix",
+          //shape: 'card-node2',
+          type: 'docker',
+          comboId: '2combo2'
         }
       ],
       edges: [
         {
           label: "Label",
           source: "0",
-          target: "1"
+          target: "1",
+          //type:"line-dash",
+          style: {
+            lineWidth: 2,
+            stroke: '#bae7ff',
+          }
+        },
+        {
+          label: "Label",
+          source: "0",
+          target: "1",
+          type:"line-dash",
+          style: {
+            lineWidth: 2,
+            stroke: '#bae7ff',
+          }
         }
-      ]
+      ],
+         combos: [
+           
+    { id: 'combo2',type:'kubernetes', size:[400,100],zIndex: 1,name: '应用',parentId: 'combo1' },
+    { id: 'combo1',type:'kubernetes',size:[500,500],zIndex: 0, name: '集群' },
+    //{ id: 'combo3',type:'kubernetes', size:[100,80],name: 'POD',parentId: 'combo2' },
+
+    { id: '2combo2',type:'kubernetes',size:[400,100], zIndex: 1, name: '应用2',parentId: '2combo1' },
+    { id: '2combo1',type:'kubernetes',size:[500,500], zIndex: 0,name: '集群2' },
+    //{ id: '2combo3',type:'kubernetes',size:[200,80],  name: 'POD2',parentId: '2combo2' },
+  ],
+
     }
   }
   },
   methods: {
     nodeClick: function (item) {
-      alert('click'+ JSON.stringify(item._cfg.model) )      
+      //alert('click'+ JSON.stringify(item._cfg.model) )      
     },
     afteradditem: function (item) {
-      alert('afteradditem'+  JSON.stringify(item._cfg.model) )      
+      //alert('afteradditem'+  JSON.stringify(item._cfg.model) )      
     },
     beforeremoveitem: function (item) {
-      alert('beforeremoveitem'+JSON.stringify(item._cfg.model) )      
+      //alert('beforeremoveitem'+JSON.stringify(item._cfg.model) )      
     }
   }
 }

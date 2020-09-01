@@ -1,11 +1,13 @@
-import commandManager from "@/common/commandManager";
+import { Command } from '@/common/interfaces';
+import CommandManager from '@/common/CommandManager';
 
-commandManager.register("undo", {
-  name: "undo",
+const undoCommand: Command = {
+  name: 'undo',
 
   params: {},
 
-  canExecute() {
+  canExecute(graph) {
+    const commandManager: CommandManager = graph.get('commandManager');
     const { commandIndex } = commandManager;
 
     return commandIndex > 0;
@@ -22,6 +24,7 @@ commandManager.register("undo", {
   init() {},
 
   execute(graph) {
+    const commandManager: CommandManager = graph.get('commandManager');
     const { commandQueue, commandIndex } = commandManager;
 
     commandQueue[commandIndex - 1].undo(graph);
@@ -32,7 +35,9 @@ commandManager.register("undo", {
   undo() {},
 
   shortcuts: [
-    ["metaKey", "z"],
-    ["ctrlKey", "z"]
-  ]
-});
+    ['metaKey', 'z'],
+    ['ctrlKey', 'z'],
+  ],
+};
+
+export default undoCommand;

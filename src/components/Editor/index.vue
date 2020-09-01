@@ -8,6 +8,7 @@
               v-for="button in buttonGroup"
               :key="button.index"
               :name="button"
+              :commandProps="{name:button,executeCommand:executeCommand,graph:graph}"
               :executeCommand="executeCommand"
             ></Command>
           </ul>
@@ -39,8 +40,8 @@ import {
   EditorEvent,
   GraphCommonEvent
 } from "@/common/constants";
-import { CommandEvent, FlowData, MindData } from "@/common/interfaces";
-import commandManager from "@/common/commandManager";
+import { Graph,FlowData,MindData, CommandEvent } from '@/common/interfaces';
+import CommandManager from "@/common/commandManager";
 import {
   EditorCommand,
   GraphNodeEvent,
@@ -72,8 +73,10 @@ interface EditorProps {
 export default class Editor extends Vue {
   @Prop() private editorProps!: EditorProps;
   @Prop() private data: FlowData | MindData;
-  graph: G6.Graph | null = null;
+  graph: Graph | null = null;
+  commandManager= new CommandManager(123);
   flowProps = {
+    commandManager:this.commandManager,
     data: {}
   };
   FLOW_COMMAND_LIST = [
@@ -81,12 +84,6 @@ export default class Editor extends Vue {
     [EditorCommand.Copy, EditorCommand.Paste, EditorCommand.Remove],
     [EditorCommand.ZoomIn, EditorCommand.ZoomOut]
   ];
-
-  created() {
-    this.flowProps = {
-      data: this.$props.data
-    };
-  }
 
   static setTrackable(trackable: boolean) {
     global.trackable = trackable;
@@ -97,8 +94,16 @@ export default class Editor extends Vue {
   };
 
   lastMousedownTarget: HTMLElement | null = null;
+  created() {
+    this.flowProps = {
+      commandManager:this.commandManager,
+      data: this.$props.data
+    };    
+ 
+  }
 
-  shouldTriggerShortcut(graph: G6.Graph, target: HTMLElement | null) {
+
+  shouldTriggerShortcut(graph: Graph, target: HTMLElement | null) {
     const renderer: RendererType = graph.get("renderer");
     const canvasElement = graph.get("canvas").get("el");
 
@@ -129,10 +134,10 @@ export default class Editor extends Vue {
     }
   }
 
-  bindEvent(graph: G6.Graph) {
+  bindEvent(graph: Graph) {
     const props = this.$props.editorProps;
-    graph.on<CommandEvent>(EditorEvent.onBeforeExecuteCommand, () => {});
-    graph.on<CommandEvent>(EditorEvent.onAfterExecuteCommand, () => {});
+    graph.on(EditorEvent.onBeforeExecuteCommand, () => {});
+    graph.on(EditorEvent.onAfterExecuteCommand, () => {});
     graph.on(GraphNodeEvent.onNodeClick, ({ item }) => {
       this.$emit(GraphNodeEvent.onNodeClick, item);
     });
@@ -150,7 +155,7 @@ export default class Editor extends Vue {
     });
   }
 
-  bindShortcut(graph: G6.Graph) {
+  bindShortcut(graph: Graph) {
     window.addEventListener(GraphCommonEvent.onMouseDown, e => {
       this.lastMousedownTarget = e.target as HTMLElement;
     });
@@ -160,7 +165,7 @@ export default class Editor extends Vue {
         return;
       }
 
-      Object.values(commandManager.command).some(command => {
+      Object.values(this.commandManager.command).some(command => {
         const { name, shortcuts } = command;
 
         const flag = shortcuts.some((shortcut: any) => {
@@ -180,7 +185,7 @@ export default class Editor extends Vue {
         });
 
         if (flag) {
-          if (commandManager.canExecute(graph, name)) {
+          if (this.commandManager.canExecute(graph, name)) {
             // Prevent default
             e.preventDefault();
 
@@ -198,7 +203,7 @@ export default class Editor extends Vue {
   getGraph() {
     return this.graph;
   }
-  setGraph(graph: G6.Graph) {
+  setGraph(graph: Graph) {
     this.graph = graph;
     this.bindEvent(graph);
     this.bindShortcut(graph);
@@ -208,7 +213,7 @@ export default class Editor extends Vue {
     const graph = this.graph;
 
     if (graph) {
-      commandManager.execute(graph, name, params);
+      this.commandManager.execute(graph, name, params);
     }
   }
 }

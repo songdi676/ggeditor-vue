@@ -1,8 +1,12 @@
+import { Graph } from '@/common/interfaces';
+import CommandManager from '@/common/CommandManager';
 export interface EditorContextProps {
-  graph: G6.Graph | null;
+  graph: Graph | null;
   executeCommand: (name: string, params?: object) => void;
+  commandManager: CommandManager;
 }
 
 export interface EditorPrivateContextProps {
-  setGraph: (graph: G6.Graph) => void;
+  setGraph: (graph: Graph) => void;
+  commandManager: CommandManager;
 }

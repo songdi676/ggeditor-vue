@@ -1,5 +1,5 @@
-import { Behavior, GraphEvent } from "@/common/interfaces";
-import behaviorManager from "@/common/behaviorManager";
+import { Behavior, GraphEvent } from '@/common/interfaces';
+import behaviorManager from '@/common/behaviorManager';
 
 interface DragCanvasBehavior extends Behavior {
   /** 开始拖拽坐标 */
@@ -15,12 +15,12 @@ interface DragCanvasBehavior extends Behavior {
   canDrag(): boolean;
   /** 更新当前窗口 */
   updateViewport(e: GraphEvent): void;
-  /** 处理画布鼠标按下 */
-  handleCanvasMouseDown(e: GraphEvent): void;
-  /** 处理画布鼠标移动 */
-  handleCanvasMouseMove(e: GraphEvent): void;
-  /** 处理画布鼠标弹起 */
-  handleCanvasMouseUp(e: MouseEvent): void;
+  /** 处理画布拖拽开始 */
+  handleCanvasDragStart(e: GraphEvent): void;
+  /** 处理画布拖拽 */
+  handleCanvasDrag(e: GraphEvent): void;
+  /** 处理画布拖拽结束 */
+  handleCanvasDragEnd(e?: GraphEvent): void;
   /** 处理窗口鼠标弹起 */
   handleWindowMouseUp: (e: MouseEvent) => void | null;
   /** 处理鼠标移出画布 */
@@ -40,8 +40,7 @@ interface DefaultConfig {
   notAllowKeyCode: number[];
 }
 
-const dragCanvasBehavior: DragCanvasBehavior &
-  ThisType<DragCanvasBehavior & DefaultConfig> = {
+const dragCanvasBehavior: DragCanvasBehavior & ThisType<DragCanvasBehavior & DefaultConfig> = {
   origin: null,
 
   keyCode: null,
@@ -53,26 +52,26 @@ const dragCanvasBehavior: DragCanvasBehavior &
   getDefaultCfg(): DefaultConfig {
     return {
       allowKeyCode: [],
-      notAllowKeyCode: [16]
+      notAllowKeyCode: [16],
     };
   },
 
   getEvents() {
     return {
-      "canvas:mousedown": "handleCanvasMouseDown",
-      "canvas:mousemove": "handleCanvasMouseMove",
-      "canvas:mouseup": "handleCanvasMouseUp",
-      "canvas:mouseleave": "handleCanvasMouseLeave",
-      "canvas:contextmenu": "handleCanvasContextMenu",
-      keydown: "handleKeyDown",
-      keyup: "handleKeyUp"
+      'canvas:dragstart': 'handleCanvasDragStart',
+      'canvas:drag': 'handleCanvasDrag',
+      'canvas:dragend': 'handleCanvasDragEnd',
+      'canvas:mouseleave': 'handleCanvasMouseLeave',
+      'canvas:contextmenu': 'handleCanvasContextMenu',
+      keydown: 'handleKeyDown',
+      keyup: 'handleKeyUp',
     };
   },
 
   canDrag() {
     const { keyCode, allowKeyCode, notAllowKeyCode } = this;
 
-    let isAllow = !allowKeyCode.length;
+    let isAllow = !!!allowKeyCode.length;
 
     if (!keyCode) {
       return isAllow;
@@ -97,14 +96,14 @@ const dragCanvasBehavior: DragCanvasBehavior &
 
     this.origin = {
       x: clientX,
-      y: clientY
+      y: clientY,
     };
 
     this.graph.translate(dx, dy);
     this.graph.paint();
   },
 
-  handleCanvasMouseDown(e) {
+  handleCanvasDragStart(e) {
     if (!this.shouldBegin.call(this, e)) {
       return;
     }
@@ -115,13 +114,13 @@ const dragCanvasBehavior: DragCanvasBehavior &
 
     this.origin = {
       x: e.clientX,
-      y: e.clientY
+      y: e.clientY,
     };
 
     this.dragging = false;
   },
 
-  handleCanvasMouseMove(e) {
+  handleCanvasDrag(e) {
     if (!this.shouldUpdate.call(this, e)) {
       return;
     }
@@ -135,23 +134,13 @@ const dragCanvasBehavior: DragCanvasBehavior &
     }
 
     if (!this.dragging) {
-      this.graph.emit("canvas:dragstart", {
-        type: "dragstart",
-        ...e
-      });
-
       this.dragging = true;
     } else {
-      this.graph.emit("canvas:drag", {
-        type: "drag",
-        ...e
-      });
-
       this.updateViewport(e);
     }
   },
 
-  handleCanvasMouseUp(e) {
+  handleCanvasDragEnd(e) {
     if (!this.shouldEnd.call(this, e)) {
       return;
     }
@@ -160,26 +149,17 @@ const dragCanvasBehavior: DragCanvasBehavior &
       return;
     }
 
-    this.graph.emit("canvas:dragend", {
-      type: "dragend",
-      ...e
-    });
-
     this.origin = null;
     this.dragging = false;
 
     if (this.handleWindowMouseUp) {
-      document.body.removeEventListener(
-        "mouseup",
-        this.handleWindowMouseUp,
-        false
-      );
+      document.body.removeEventListener('mouseup', this.handleWindowMouseUp, false);
       this.handleWindowMouseUp = null;
     }
   },
 
   handleCanvasMouseLeave() {
-    const canvasElement = this.graph.get("canvas").get("el");
+    const canvasElement = this.graph.get('canvas').get('el');
 
     if (this.handleWindowMouseUp) {
       return;
@@ -187,11 +167,11 @@ const dragCanvasBehavior: DragCanvasBehavior &
 
     this.handleWindowMouseUp = e => {
       if (e.target !== canvasElement) {
-        this.handleCanvasMouseUp(e);
+        this.handleCanvasDragEnd();
       }
     };
 
-    document.body.addEventListener("mouseup", this.handleWindowMouseUp, false);
+    document.body.addEventListener('mouseup', this.handleWindowMouseUp, false);
   },
 
   handleCanvasContextMenu() {
@@ -205,7 +185,7 @@ const dragCanvasBehavior: DragCanvasBehavior &
 
   handleKeyUp() {
     this.keyCode = null;
-  }
+  },
 };
 
-behaviorManager.register("drag-canvas", dragCanvasBehavior);
+behaviorManager.register('drag-canvas', dragCanvasBehavior);

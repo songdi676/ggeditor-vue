@@ -1,5 +1,5 @@
 <template>
-  <Graph
+  <GraphComponent
     :graphProps="graphProps"
     :containerId="containerId"
     :parseData="parseData"
@@ -16,27 +16,24 @@ import G6 from "@antv/g6";
 import { guid } from "@/utils";
 import global from "@/common/global";
 import { FLOW_CONTAINER_ID, GraphType } from "@/common/constants";
-import {
-  FlowData,
-  GraphEvent,
-  GraphReactEventProps
-} from "@/common/interfaces";
 import behaviorManager from "@/common/behaviorManager";
-import Graph from "@/components/Graph/index.vue";
-
+import GraphComponent from "@/components/Graph/index.vue";
+import { Graph, GraphOptions, FlowData, GraphEvent, GraphReactEventProps } from '@/common/interfaces';
+import CommandManager from '@/common/CommandManager';
 
 import "./behavior";
 interface FlowProps extends Partial<GraphReactEventProps> {
   style?: object;
   className?: string;
   data: FlowData;
-  graphConfig?: Partial<G6.GraphOptions>;
+  commandManager:CommandManager;
+  graphConfig?: Partial<GraphOptions>;
   customModes?: (mode: string, behaviors: any) => object;
 }
 
 @Component({
   components: {
-    Graph
+    GraphComponent
   }
 })
 export default class Flow extends Vue {
@@ -46,7 +43,7 @@ export default class Flow extends Vue {
     graphConfig: {}
   };
 
-  graph: G6.Graph | null = null;
+  graph: Graph | null = null;
 
   containerId = `${FLOW_CONTAINER_ID}_${guid()}`;
   graphProps = {
@@ -54,7 +51,8 @@ export default class Flow extends Vue {
     parseData: this.parseData,
     initGraph: this.initGraph,
     data: this.flowProps.data,
-    setGraph: this.setGraph
+    setGraph: this.setGraph,
+    commandManager:this.flowProps.commandManager
   };
   canDragNode(e: GraphEvent) {
     return !["anchor", "banAnchor"].some(
@@ -81,11 +79,9 @@ export default class Flow extends Vue {
 
     [...nodes, ...edges].forEach(item => {
       const { id } = item;
-
       if (id) {
         return;
       }
-
       item.id = guid();
     });
   }
@@ -113,7 +109,8 @@ export default class Flow extends Vue {
             shouldUpdate: this.canDragOrZoomCanvas
           },
           "recall-edge": "recall-edge",
-          "brush-select": "brush-select"
+          "brush-select": "brush-select",
+          'drag-combo':'drag-combo'
         }
       }
     );
@@ -130,11 +127,12 @@ export default class Flow extends Vue {
       width,
       height,
       modes,
+      groupByTypes:false,
       defaultNode: {
-        shape: "bizFlowNode"
+        type: "docker"
       },
       defaultEdge: {
-        shape: "bizFlowEdge"
+        type: "bizFlowEdge"
       },
       ...graphConfig
     });

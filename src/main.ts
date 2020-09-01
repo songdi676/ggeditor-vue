@@ -5,8 +5,6 @@ import "@/shape";
 import "@/assets/icons/iconfont.css";
 
 Vue.config.productionTip = false;
-
-
 new Vue({
   store,
   render: h => h(App)

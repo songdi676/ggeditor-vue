@@ -1,46 +1,45 @@
-import G6 from "@antv/g6";
-import { G } from "@antv/g6/types/g";
-import merge from "lodash/merge";
-import isArray from "lodash/isArray";
-import { ItemState } from "@/common/constants";
-import { NodeModel, CustomNode } from "@/common/interfaces";
-import { optimizeMultilineText } from "../utils";
+import G6 from '@antv/g6';
+import merge from 'lodash/merge';
+import isArray from 'lodash/isArray';
+import { ItemState } from '@/common/constants';
+import { GGroup, NodeModel, CustomNode } from '@/common/interfaces';
+import { optimizeMultilineText } from '../utils';
 
 const WRAPPER_BORDER_WIDTH = 2;
 const WRAPPER_HORIZONTAL_PADDING = 10;
 
-const WRAPPER_CLASS_NAME = "node-wrapper";
-const CONTENT_CLASS_NAME = "node-content";
-const LABEL_CLASS_NAME = "node-label";
+const WRAPPER_CLASS_NAME = 'node-wrapper';
+const CONTENT_CLASS_NAME = 'node-content';
+const LABEL_CLASS_NAME = 'node-label';
 
 const bizNode: CustomNode = {
   options: {
     size: [120, 60],
     wrapperStyle: {
-      fill: "#5487ea",
-      radius: 8
+      fill: '#5487ea',
+      radius: 8,
     },
     contentStyle: {
-      fill: "#ffffff",
-      radius: 6
+      fill: '#ffffff',
+      radius: 6,
     },
     labelStyle: {
-      fill: "#000000",
-      textAlign: "center",
-      textBaseline: "middle"
+      fill: '#000000',
+      textAlign: 'center',
+      textBaseline: 'middle',
     },
     stateStyles: {
       [ItemState.Active]: {
         wrapperStyle: {},
         contentStyle: {},
-        labelStyle: {}
-      },
+        labelStyle: {},
+      } as any,
       [ItemState.Selected]: {
         wrapperStyle: {},
         contentStyle: {},
-        labelStyle: {}
-      }
-    }
+        labelStyle: {},
+      } as any,
+    },
   },
 
   getOptions(model: NodeModel) {
@@ -56,60 +55,63 @@ const bizNode: CustomNode = {
     return keyShape;
   },
 
-  drawWrapper(model: NodeModel, group: G.Group) {
+  drawWrapper(model: NodeModel, group: GGroup) {
     const [width, height] = this.getSize(model);
     const { wrapperStyle } = this.getOptions(model);
 
-    const shape = group.addShape("rect", {
+    const shape = group.addShape('rect', {
       className: WRAPPER_CLASS_NAME,
+      draggable: true,
       attrs: {
         x: 0,
         y: -WRAPPER_BORDER_WIDTH * 2,
         width,
         height: height + WRAPPER_BORDER_WIDTH * 2,
-        ...wrapperStyle
-      }
+        ...wrapperStyle,
+      },
     });
 
     return shape;
   },
 
-  drawContent(model: NodeModel, group: G.Group) {
+  drawContent(model: NodeModel, group: GGroup) {
     const [width, height] = this.getSize(model);
     const { contentStyle } = this.getOptions(model);
 
-    const shape = group.addShape("rect", {
+    const shape = group.addShape('rect', {
       className: CONTENT_CLASS_NAME,
+      draggable: true,
       attrs: {
         x: 0,
         y: 0,
         width,
         height,
-        ...contentStyle
-      }
+        ...contentStyle,
+      },
     });
 
     return shape;
   },
 
-  drawLabel(model: NodeModel, group: G.Group) {
+  drawLabel(model: NodeModel, group: GGroup) {
     const [width, height] = this.getSize(model);
     const { labelStyle } = this.getOptions(model);
 
-    const shape = group.addShape("text", {
+    const shape = group.addShape('text', {
       className: LABEL_CLASS_NAME,
+      draggable: true,
       attrs: {
         x: width / 2,
         y: height / 2,
         text: model.label,
-        ...labelStyle
-      }
+        ...labelStyle,
+      },
     });
 
     return shape;
   },
 
-  setLabelText(model: NodeModel, group: G.Group) {
+  setLabelText(model: NodeModel, group: GGroup) {
     const shape = group.findByClassName(LABEL_CLASS_NAME);
 
     if (!shape) {
@@ -119,18 +121,10 @@ const bizNode: CustomNode = {
     const [width] = this.getSize(model);
     const { fontStyle, fontWeight, fontSize, fontFamily } = shape.attr();
 
-    const text = model.label;
+    const text = model.label as string;
     const font = `${fontStyle} ${fontWeight} ${fontSize}px ${fontFamily}`;
 
-    shape.attr(
-      "text",
-      optimizeMultilineText(
-        text,
-        font,
-        2,
-        width - WRAPPER_HORIZONTAL_PADDING * 2
-      )
-    );
+    shape.attr('text', optimizeMultilineText(text, font, 2, width - WRAPPER_HORIZONTAL_PADDING * 2));
   },
 
   update(model, item) {
@@ -140,36 +134,28 @@ const bizNode: CustomNode = {
   },
 
   setState(name, value, item) {
-    if (this.beforeSetState) {
-      this.beforeSetState(name, value, item);
-    }
     const group = item.getContainer();
     const model = item.getModel();
     const states = item.getStates() as ItemState[];
 
-    [WRAPPER_CLASS_NAME, CONTENT_CLASS_NAME, LABEL_CLASS_NAME].forEach(
-      className => {
-        const shape = group.findByClassName(className);
-        const options = this.getOptions(model);
+    [WRAPPER_CLASS_NAME, CONTENT_CLASS_NAME, LABEL_CLASS_NAME].forEach(className => {
+      const shape = group.findByClassName(className);
+      const options = this.getOptions(model);
 
-        const shapeName = className.split("-")[1];
+      const shapeName = className.split('-')[1];
 
-        shape.attr({
-          ...options[`${shapeName}Style`]
-        });
+      shape.attr({
+        ...options[`${shapeName}Style`],
+      });
 
-        states.forEach(state => {
-          if (
-            options.stateStyles[state] &&
-            options.stateStyles[state][`${shapeName}Style`]
-          ) {
-            shape.attr({
-              ...options.stateStyles[state][`${shapeName}Style`]
-            });
-          }
-        });
-      }
-    );
+      states.forEach(state => {
+        if (options.stateStyles[state] && options.stateStyles[state][`${shapeName}Style`]) {
+          shape.attr({
+            ...options.stateStyles[state][`${shapeName}Style`],
+          });
+        }
+      });
+    });
 
     if (name === ItemState.Selected) {
       const wrapperShape = group.findByClassName(WRAPPER_CLASS_NAME);
@@ -181,16 +167,20 @@ const bizNode: CustomNode = {
           x: -WRAPPER_BORDER_WIDTH,
           y: -WRAPPER_BORDER_WIDTH * 2,
           width: width + WRAPPER_BORDER_WIDTH * 2,
-          height: height + WRAPPER_BORDER_WIDTH * 3
+          height: height + WRAPPER_BORDER_WIDTH * 3,
         });
       } else {
         wrapperShape.attr({
           x: 0,
           y: -WRAPPER_BORDER_WIDTH * 2,
           width,
-          height: height + WRAPPER_BORDER_WIDTH * 2
+          height: height + WRAPPER_BORDER_WIDTH * 2,
         });
       }
+    }
+
+    if (this.afterSetState) {
+      this.afterSetState(name, value, item);
     }
   },
 
@@ -204,14 +194,13 @@ const bizNode: CustomNode = {
     return size;
   },
 
+  getCustomConfig() {
+    return {};
+  },
+
   getAnchorPoints() {
-    return [
-      [0, 0.5],
-      [1, 0.5],
-      [0.5, 0],
-      [0.5, 1]
-    ];
-  }
+    return [];
+  },
 };
 
-G6.registerNode("bizNode", bizNode);
+G6.registerNode('bizNode', bizNode);

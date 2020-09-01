@@ -1,7 +1,7 @@
-import G6 from "@antv/g6";
-import { isMind } from "@/utils";
-import { GraphType } from "@/common/constants";
-import { Behavior } from "@/common/interfaces";
+import G6 from '@antv/g6';
+import { isMind } from '@/utils';
+import { GraphType } from '@/common/constants';
+import { Graph, Behavior } from '@/common/interfaces';
 
 class BehaviorManager {
   behaviors: {
@@ -24,7 +24,7 @@ class BehaviorManager {
         return;
       }
 
-      const { graphMode = "default" } = behavior;
+      const { graphMode = 'default' } = behavior;
 
       if (!registeredBehaviors[graphMode]) {
         registeredBehaviors[graphMode] = {};
@@ -43,12 +43,12 @@ class BehaviorManager {
       const handlerName = events[event];
       const handler = behavior[handlerName];
 
-      behavior[handlerName] = function(...params: any[]) {
+      behavior[handlerName] = function (...params: any[]) {
         const { graph } = this;
 
         if (
-          (type === GraphType.Flow && isMind(graph as G6.Graph) === false) ||
-          (type === GraphType.Mind && isMind(graph as G6.Graph))
+          (type === GraphType.Flow && isMind(graph as Graph) === false) ||
+          (type === GraphType.Mind && isMind(graph as Graph))
         ) {
           handler.apply(this, params);
         }
@@ -65,17 +65,11 @@ class BehaviorManager {
 
     switch (graphType) {
       case GraphType.Flow:
-        G6.registerBehavior(
-          name,
-          this.wrapEventHandler(GraphType.Flow, behavior)
-        );
+        G6.registerBehavior(name, this.wrapEventHandler(GraphType.Flow, behavior));
         break;
 
       case GraphType.Mind:
-        G6.registerBehavior(
-          name,
-          this.wrapEventHandler(GraphType.Mind, behavior)
-        );
+        G6.registerBehavior(name, this.wrapEventHandler(GraphType.Mind, behavior));
         break;
 
       default:
